@@ -5,7 +5,7 @@ import { BugComponent } from './includes/bug/bug.component';
 import { Account } from './services/account/account.service';
 import { Http } from './services/http/http.service';
 import { Loading } from './services/loading/loading.service';
-import bug from '../database/bug';
+import { Versions } from './services/versions/versions.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   public panel: Boolean = false;
   public drawer: Boolean = true;
   private bug: Boolean = false;
-  constructor(private account: Account, private http: Http, public loading: Loading, private router: Router, private dialog: MdcDialog) { }
+  constructor(private account: Account, private http: Http, public loading: Loading, private versions: Versions, private router: Router, private dialog: MdcDialog) { }
   ngOnInit() {
     this.account.load();
     this.panel = window.location.pathname != '/';
@@ -42,9 +42,20 @@ export class AppComponent implements OnInit {
   }
   showBug() {
     let database = window.localStorage.getItem('latest')
-    if (database && parseInt(database) >= bug.length) return;
-    this.dialog.open(BugComponent, { data: bug[0], escapeToClose: false, clickOutsideToClose: false }).afterClosed().subscribe(() => {
-      window.localStorage.setItem('latest', (bug.length).toString());
-    });
+    this.http.versions().then((bug: object[]) => {
+      this.versions.bugs = bug;
+      this.versions.version = bug[0]['version'];
+
+      if (database && parseInt(database) >= bug.length) return;
+      this.dialog.open(BugComponent, { data: bug[0], escapeToClose: false, clickOutsideToClose: false }).afterClosed().subscribe(() => {
+        window.localStorage.setItem('latest', (bug.length).toString());
+        caches.keys().then(keys => {
+          for (let i in keys) {
+            caches.delete(keys[i]);
+          }
+          window.location.reload();
+        });
+      });
+    })
   }
 }

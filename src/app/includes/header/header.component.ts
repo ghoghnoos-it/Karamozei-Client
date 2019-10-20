@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Account } from '../../services/account/account.service';
 import { Loading } from '../../services/loading/loading.service';
-import bug from '../../../database/bug';
+import { Versions } from '../../services/versions/versions.service';
 
 @Component({
   selector: 'app-header',
@@ -50,13 +50,12 @@ export class HeaderComponent implements OnInit {
 
   private deferredPrompt = null;
   @Output() drawer: EventEmitter<any> = new EventEmitter();
-  constructor(public account: Account, public loading: Loading, private router: Router) { }
+  constructor(public account: Account, public loading: Loading, public versions: Versions, private router: Router) { }
 
   ngOnInit() {
     window.onresize = () => this.setOpen();
     this.setOpen();
     this.pwaEvent();
-    this.version = bug[0]['version'];
     setTimeout(() => {
       this.phone = this.account.info['phone']['number'];
     }, 100);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import bug from '../../../../../database/bug';
+import { Versions } from '../../../../services/versions/versions.service';
 
 @Component({
   selector: 'app-bug',
@@ -8,10 +8,12 @@ import bug from '../../../../../database/bug';
 })
 export class BugComponent implements OnInit {
   public items = [];
-  constructor() { }
+  constructor(private versions: Versions) { }
 
   ngOnInit() {
-    this.items = bug;
+    this.items = this.versions['bugs'];
+    console.log(this.versions);
+    
   }
 
 }

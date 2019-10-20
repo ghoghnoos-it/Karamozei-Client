@@ -118,5 +118,14 @@ export class Http {
     else url += '/' + file;
     return url;
   }
+
+  versions() {
+    return new Promise((resolve, reject) => {
+      fetch("https://raw.githubusercontent.com/ghoghnoos-it/Karamozei-Client/master/versions.json").then(res => {
+        let result = res.json();
+        resolve(result);
+      }).catch(reject);
+    })
+  }
 }
 
