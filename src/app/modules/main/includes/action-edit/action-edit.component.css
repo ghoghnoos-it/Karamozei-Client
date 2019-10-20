@@ -1,0 +1,22 @@
+button{
+    margin-right: 10px;
+}
+
+span{
+    position: relative;
+    bottom: 10px;
+}
+
+mdc-text-field{
+    width: 100%;
+}
+
+mdc-dialog-title p {
+    margin-top: -30px;
+    margin-bottom: 5px;
+}
+
+
+mdc-dialog-title span {
+    font-size: 0.9rem;
+}

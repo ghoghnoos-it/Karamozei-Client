@@ -1,0 +1,35 @@
+<mdc-top-app-bar fixed>
+    <mdc-top-app-bar-row>
+        <mdc-top-app-bar-section align="start" [title]="closeable?'ققنوس':'سامانه کار آموزی ققنوس'">
+            <button mdcTopAppBarNavIcon (click)="toggleDrawer()">
+                <mdc-icon>menu</mdc-icon>
+            </button>
+        </mdc-top-app-bar-section>
+        <mdc-top-app-bar-section align="end">
+            <div class="flex nowrap c-ai">
+                <button *ngIf="installable" (click)="install()" mdc-button raised
+                    style="margin-right: 10px; margin-top: -3px">
+                    <mdc-icon>get_app</mdc-icon>نصب
+                </button>
+            </div>
+        </mdc-top-app-bar-section>
+    </mdc-top-app-bar-row>
+</mdc-top-app-bar>
+<mdc-drawer [drawer]="closeable?'modal':'dismissible'" autoFocus="false" [open]="open">
+    <mdc-drawer-header [title]="name" [subtitle]="phone"></mdc-drawer-header>
+    <mdc-drawer-content>
+        <mdc-list-divider></mdc-list-divider>
+        <mdc-list>
+            <div *ngFor="let item of list">
+                <a *ngIf="!item['permission'] || (item['permission'] &&  item['permission'].includes(account['info']['permission']))"
+                    mdc-list-item [activated]="path == item['path']" (click)="goTo(item['path'])">
+                    <mdc-icon mdcListItemGraphic>{{item['icon']}}</mdc-icon>{{item['title']}}
+                </a>
+            </div>
+        </mdc-list>
+        <div class="footer">
+            <div class="app-version">نسخه ی {{version}}</div>
+            <div class="app-owner">طراحی شده توسط تیم شرکت ققونس</div>
+        </div>
+    </mdc-drawer-content>
+</mdc-drawer>

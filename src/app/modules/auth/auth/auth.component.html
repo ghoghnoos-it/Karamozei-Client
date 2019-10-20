@@ -1,0 +1,27 @@
+<div class="container flex column c-ai c-jc">
+    <mdc-card>
+        <div class="content flex column">
+            <h3>حساب کاربری</h3>
+            <p *ngIf="sent == false">با شماره موبایل خود می توانید ایجاد / ورود به حساب کاربری کنید.</p>
+            <p *ngIf="sent == true">کد تایید ۵ رقمی به شماره موبایل {{phone}} ارسال شد.</p>
+            <mdc-form-field fluid *ngIf="sent == false">
+                <mdc-text-field type="tel" [(ngModel)]="phone" (keyup.enter)="submit()" label="شماره موبایل" outlined
+                    required autocomplete="off">
+                </mdc-text-field>
+            </mdc-form-field>
+            <mdc-form-field fluid *ngIf="sent == true">
+                <mdc-text-field type="tel" [(ngModel)]="token" (keyup)="onKeyup('token',5)" (keyup.enter)="submit()"
+                    label="کد تایید" outlined required autocomplete="off">
+                </mdc-text-field>
+            </mdc-form-field>
+            <button mdc-button secondary raised [disabled]="loading" (click)="submit()">{{sent?"ثبت":"ارسال"}}</button>
+        </div>
+        <mdc-card-actions *ngIf="sent == true">
+            <span class="back" (click)="sent = false">ویرایش شماره موبایل</span>
+            <span class="timer" *ngIf="time != 0">{{time}}</span>
+            <button mdc-fab mini (click)="send()" *ngIf="time == 0">
+                <mdc-icon>refresh</mdc-icon>
+            </button>
+        </mdc-card-actions>
+    </mdc-card>
+</div>

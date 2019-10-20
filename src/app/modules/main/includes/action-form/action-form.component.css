@@ -1,0 +1,12 @@
+button{
+    margin-right: 10px;
+}
+
+span{
+    position: relative;
+    bottom: 10px;
+}
+
+mdc-textarea{
+    width: 100%;
+}

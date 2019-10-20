@@ -1,0 +1,75 @@
+div.container {
+    height: 100vh;
+    width: 100vw;
+    background-color: #f8f8f8;
+}
+
+mdc-card {
+    border-radius: 5px;
+    max-width: 400px;
+}
+
+div.content {
+    padding: 20px;
+}
+
+mdc-card-actions {
+    background-color: #f0f0f0;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
+
+button {
+    margin-top: 10px;
+    margin-right: auto;
+}
+
+button.mdc-fab{
+    width: 40px;
+    background-color: var(--mdc-theme-primary);
+    margin-top: -2px;
+}
+
+span.back {
+    cursor: pointer;
+    color: #000;
+    transition: color .2s;
+}
+
+span.back:hover {
+    color: var(--mdc-theme-secondary);
+    transition: color .2s;
+}
+
+span.timer {
+    margin-right: auto;
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    mdc-card{
+        max-width: 100vw;
+        width: 100vw;
+        height: 100vh;
+    }
+    div.content {
+        padding: 40px;
+    }
+    mdc-card-actions{
+        position: absolute;
+        bottom: 60px;
+        left: 20px;
+        right: 20px;
+        background-color: #fff;
+    }
+    button:not(.mdc-fab) {
+        position: absolute;
+        right: 20px;
+        left: 20px;
+        bottom: 20px;
+        width: calc(100% - 40px);
+    }
+}

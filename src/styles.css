@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "./styles/flexbox.css";
+@import "./styles/normalize.css";
+@font-face {
+    font-family: 'Roboto';
+    src: local('☺'), local('B Yekan'), url('/assets/font.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    border: none;
+    outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: Roboto, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.font, button, input, textarea, a {
+    font-family: Roboto, Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.no-font{
+    font-family: Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.mdc-tab-bar.white .mdc-tab .mdc-tab__text-label {
+    color: #fff !important;
+}
+
+.mdc-tab-bar.white .mdc-tab-indicator .mdc-tab-indicator__content--underline {
+    border-color: #fff !important;
+}
+
+.mdc-tab-bar.white .mdc-tab__ripple::before, .mdc-tab__ripple::after {
+    background-color: #fff !important;
+}

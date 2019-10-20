@@ -1,0 +1,22 @@
+<mdc-dialog>
+    <mdc-card>
+        <div class="flex nowrap c-ai">
+            <mdc-icon>bug_report</mdc-icon>
+            <div class="flex column" style="margin-right: 20px;">
+                <h2 mdcHeadline6>نسخه {{item['version']}} <span>جدید</span></h2>
+                <h3 mdcSubtitle2>{{item['released']}}</h3>
+            </div>
+        </div>
+        <br>
+        <mdc-list-divider></mdc-list-divider>
+        <div class="flex column">
+            <ol>
+                <li *ngFor="let new of item['new']">{{new}}</li>
+            </ol>
+            <ol>
+                <li *ngFor="let update of item['update']">{{update}}</li>
+            </ol>
+        </div>
+        <button mdc-button raised (click)="close()">بستن</button>
+    </mdc-card>
+</mdc-dialog>

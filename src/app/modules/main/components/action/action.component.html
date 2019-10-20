@@ -1,0 +1,61 @@
+<div class="background"></div>
+<div class="today">
+    <div class="month_name flex nowrap c-ai"><span
+            *ngIf="view == 'records'">{{day}}ام</span>&nbsp;<span>{{today[3]}} ماه</span></div>
+</div>
+<mdc-card *ngIf="view == 'calender'">
+    <div class="days flex nowrap">
+        <div class="day" *ngFor="let item of days_name">{{item}}</div>
+    </div>
+    <div *ngFor="let week of days" class="flex nowrap">
+        <div *ngFor="let day of week" class="column"
+            [ngClass]="{'today': today[2] == day, 'not-today': day > today[2] || day == ''}"
+            (click)="openForm(day)"><span>{{day}}</span></div>
+    </div>
+</mdc-card>
+<div class="records flex wrap" *ngIf="view == 'records'">
+    <mdc-card [ngClass]="['error']" *ngIf="!data || data.length == 0">
+        <mdc-icon>report_problem</mdc-icon>
+        <h2>هیچ فعالیتی ثبت نشده است.</h2>
+        <p>متاسفانه هیچ کارآموزی فعالیت امروزش را ثبت نکرده است.</p>
+    </mdc-card>
+    <mdc-card *ngFor="let item of data; let i = index">
+        <p>{{item['details']}}</p>
+        <mdc-list-divider></mdc-list-divider>
+        <p>
+            <span>{{setGender(item['user']['info']['gender'])}}</span>&nbsp;<span>{{item['user']['name']['first']}}
+                {{item['user']['name']['last']}}</span>
+        </p>
+        <div class="times flex nowrap">
+            <div class="time flex column c-ai c-jc">
+                <span>زمان شروع</span>
+                <span>{{item['time']['start']['hour']}}:{{item['time']['start']['minute']}}</span>
+            </div>
+            <div class="time flex column c-ai c-jc">
+                <span>زمان پایان</span>
+                <span>{{item['time']['end']['hour']}}:{{item['time']['end']['minute']}}</span>
+            </div>
+            <div class="time flex column c-ai c-jc">
+                <span>مجموع زمان</span>
+                <span>{{item['time']['max']['hour']}}:{{item['time']['max']['minute']}}</span>
+            </div>
+        </div>
+        <mdc-list-divider></mdc-list-divider>
+        <div class="flex nowrap" style="width: 100%;">
+            <button style="border-radius: 0; box-shadow: none; width: 100%;" mdc-button raised
+                (click)="removeAction(item['id'], i)">
+                <mdc-icon>delete</mdc-icon>حذف
+            </button>
+            <button style="border-radius: 0; box-shadow: none; width: 100%;" mdc-button raised
+                (click)="editAction(item, i)">
+                <mdc-icon>edit</mdc-icon>ویرایش
+            </button>
+            <button style="border-radius: 0; box-shadow: none; width: 100%;" *ngIf="item['verified'] == false"
+                mdc-button raised (click)="setVerified(item['id'], i)">
+                <mdc-icon>done</mdc-icon>تایید
+            </button>
+        </div>
+    </mdc-card>
+</div>
+<button *ngIf="view =='records'" mdc-fab extended icon="close" label="بستن" (click)="view = 'calender'"
+    [disabled]="loading.show == true"></button>

@@ -1,0 +1,13 @@
+div.input-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+mdc-text-field{
+    width: 100%;
+    margin: 0 5px;
+}

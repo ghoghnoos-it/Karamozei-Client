@@ -1,0 +1,105 @@
+div.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+div.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 200px;
+    background-color: #363640;
+    z-index: -1;
+}
+
+div.background::after {
+    content: "";
+    position: absolute;
+    top: 200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fafafa;
+    z-index: -1;
+}
+
+div.container h2{
+    color: #fff;
+    margin-right: 20px;
+}
+
+mdc-card {
+    height: 100%;
+    margin: 10px;
+}
+
+mdc-card.chart {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mdc-card.data {
+    width: 300px;
+}
+
+mdc-card.data div.title {
+    margin: 20px;
+    font-size: 1.4rem;
+}
+
+mdc-card.data div.value {
+    float: left;
+    text-align: left;
+    margin: 20px;
+    font-size: 1.2rem;
+}
+
+mdc-card.data div.value span {
+    font-size: 2.5rem;
+}
+
+canvas {
+    max-width: 450px;
+    padding: 20px;
+}
+
+div.flex.wrap {
+    margin-bottom: 20px;
+    height: 100%;
+    position: relative;
+}
+
+mdc-data-table {
+    margin: 0 20px;
+    width: calc(100% - 40px);
+}
+
+.left {
+    float: left;
+    text-align: left;
+    margin-right: -30px;
+}
+
+@media only screen and (max-width: 600px) {
+    div.flex.column:not(.container) {
+        width: calc(100% - 20px) !important;
+    }
+    mdc-card {
+        width: 100% !important;
+    }
+    mdc-card.chart {
+        margin-top: 50px;
+    }
+    canvas {
+        max-width: 90%;
+    }
+}

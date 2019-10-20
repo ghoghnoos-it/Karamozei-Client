@@ -1,0 +1,62 @@
+<div class="background" *ngIf="action"></div>
+<div class="container" *ngIf="action">
+    <mdc-card [ngClass]="['error']" *ngIf="action.length == 0">
+        <mdc-icon>report_problem</mdc-icon>
+        <h2>هیچ فعالیتی ثبت نشده است.</h2>
+        <p>متاسفانه این کارآموز فعالیتی را به امروز ثبت نکرده است.</p>
+    </mdc-card>
+    <div class="head" *ngIf="action.length != 0">
+        <h2>{{user['name']['first']}} {{user['name']['last']}}</h2>
+    </div>
+    <div class="data flex wrap c-ai c-jc" *ngIf="action.length != 0">
+        <mdc-card [ngClass]="['chart']">
+            <canvas id="time"></canvas>
+        </mdc-card>
+        <div class="flex column">
+            <mdc-card [ngClass]="['data']">
+                <div class="title">ساعات گذرانده شده</div>
+                <div class="value"><span>{{time['notVerified'] || 0}}</span> /
+                    {{account.info['permission'] == 'admin'?user['time'] || 0:time['full'] || 0}}</div>
+            </mdc-card>
+            <mdc-card [ngClass]="['data']">
+                <div class="title">ساعات تایید شده شده</div>
+                <div class="value"><span>{{time['verified'] || 0}}</span> /
+                    {{account.info['permission'] == 'admin'?user['time'] || 0:time['full'] || 0}}</div>
+            </mdc-card>
+        </div>
+        <div class="flex column">
+            <mdc-card [ngClass]="['data']">
+                <div class="title">روز های گذرانده شده</div>
+                <div class="value"><span>{{action.length || 0}}</span> روز</div>
+            </mdc-card>
+            <mdc-card [ngClass]="['data']">
+                <div class="title">امتیاز کارآموز</div>
+                <div class="value"><span>{{score.yours || 0}}</span> / 100</div>
+            </mdc-card>
+        </div>
+    </div>
+    <div class="records flex wrap c-jc">
+        <mdc-card *ngFor="let item of action; let i = index">
+            <p>{{item['details']}}</p>
+            <mdc-list-divider></mdc-list-divider>
+            <div class="times flex nowrap">
+                <div class="time flex column c-ai c-jc">
+                    <span>تاریخ</span>
+                    <span>{{item['date']['year']}}/{{item['date']['month']}}/{{item['date']['day']}}</span>
+                </div>
+                <div class="time flex column c-ai c-jc">
+                    <span>ساعت کار</span>
+                    <span>{{item['time']['max']['hour']}}:{{item['time']['max']['minute']}}</span>
+                </div>
+                <div class="time flex column c-ai c-jc">
+                    <span>امتیاز</span>
+                    <span>{{item['score']}}</span>
+                </div>
+                <div class="time flex column c-ai c-jc">
+                    <span *ngIf="item['verified'] == true">تایید شده</span><span *ngIf="item['verified'] == false">تایید
+                        نشده</span>
+                </div>
+            </div>
+        </mdc-card>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="flex wrap">
+        <mdc-card *ngFor="let item of items; let i = index ">
+            <div class="flex nowrap c-ai">
+                <mdc-icon>bug_report</mdc-icon>
+                <div class="flex column" style="margin-right: 20px;">
+                    <h2 mdcHeadline6>نسخه {{item['version']}} <span *ngIf="i == 0">جدید</span></h2>
+                    <h3 mdcSubtitle2>{{item['released']}}</h3>
+                </div>
+            </div>
+            <br>
+            <mdc-list-divider></mdc-list-divider>
+            <div class="flex column">
+                <ol *ngIf="item['new'].length != 0">
+                    <li *ngFor="let new of item['new']">{{new}}</li>
+                </ol>
+                <ol *ngIf="item['update'].length != 0">
+                    <li *ngFor="let update of item['update']">{{update}}</li>
+                </ol>
+            </div>
+        </mdc-card>
+    </div>
+</div>

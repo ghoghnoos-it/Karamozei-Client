@@ -1,0 +1,81 @@
+div.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 200px;
+    background-color: #363640;
+    z-index: -1;
+}
+
+div.head {
+    position: relative;
+    width: 100%;
+    margin-bottom: -14px;
+}
+
+div.head button {
+    margin-right: 20px;
+}
+
+div.head mdc-select {
+    margin-right: auto;
+    margin-left: 20px;
+}
+
+div.table {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+}
+
+mdc-data-table {
+    width: 100%;
+}
+
+mdc-card {
+    margin: 10px auto;
+    width: 80%;
+}
+
+div.content {
+    padding: 20px;
+}
+
+mdc-text-field, mdc-select {
+    margin-bottom: 20px;
+    max-width: 350px;
+}
+
+.left {
+    float: left;
+    text-align: left;
+    margin-right: -30px;
+}
+
+div.buttons {
+    direction: ltr;
+    margin: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    div.table {
+        position: relative;
+        width: calc(100% - 20px);
+    }
+    mdc-data-table {
+        position: relative;
+        overflow: scroll !important;
+    }
+    mdc-card mdc-text-field, mdc-card mdc-select {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    mdc-card mdc-text-field, mdc-card mdc-select {
+        width: 350px;
+        min-width: 350px;
+    }
+}

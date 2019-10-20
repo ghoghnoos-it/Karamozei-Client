@@ -1,0 +1,42 @@
+<mdc-dialog>
+    <mdc-dialog-container>
+        <mdc-dialog-surface *ngIf="data['action']">
+            <mdc-dialog-title class="font">
+                <p>{{action['user']['name']['first']}} {{action['user']['name']['last']}}</p>
+                <span>فعالیت روز {{action['date']['year']}}/{{action['date']['month']}}/{{action['date']['day']}}</span>
+            </mdc-dialog-title>
+            <mdc-dialog-content>
+                <br>
+                <mdc-textarea label="توضیح فعالیت شما" rows="8" cols="40" required [(ngModel)]="action['details']">
+                </mdc-textarea>
+                <br><br>
+                <span>زمان شروع</span>
+                <br>
+                <app-time-picker [hour]="action['time']['start']['hour']" [minute]="action['time']['start']['minute']"
+                    (onChange)="setTime('start', $event)"></app-time-picker>
+                <br>
+                <span>زمان پایان</span>
+                <br>
+                <app-time-picker [hour]="action['time']['end']['hour']" [minute]="action['time']['end']['minute']"
+                    [min]="action['time']['start']['hour']" (onChange)="setTime('end', $event)">
+                </app-time-picker>
+                <br>
+                <span>مدت فعالیت : {{action['time']['max']['hour']}} ساعت و {{action['time']['max']['minute']}}
+                    دقیقه</span>
+                <br><br>
+                <mdc-text-field autocomplete="off" label="امتیاز" type="number" [min]="0" [max]="100"
+                    [(ngModel)]="action['score']" outlined>
+                </mdc-text-field>
+                <br><br>
+                <mdc-form-field>
+                    <mdc-checkbox [checked]="action['verified']" (change)="setVerified($event)"></mdc-checkbox>
+                    <label>فعالیت تایید شد</label>
+                </mdc-form-field>
+            </mdc-dialog-content>
+            <mdc-dialog-actions>
+                <button mdc-button (click)="close()" [disabled]="loading.show">لغو</button>
+                <button mdc-button raised secondary (click)="submit()" [disabled]="loading.show">ثبت</button>
+            </mdc-dialog-actions>
+        </mdc-dialog-surface>
+    </mdc-dialog-container>
+</mdc-dialog>

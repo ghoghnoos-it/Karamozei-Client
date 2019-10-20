@@ -1,0 +1,10 @@
+<mdc-linear-progress [open]="loading.show" [reversed]="true"></mdc-linear-progress>
+<div *ngIf="panel == false">
+    <router-outlet></router-outlet>
+</div>
+<div *ngIf="panel == true">
+    <app-header (drawer)="setDrawer($event)"></app-header>
+    <div class="content" [ngClass]="{'no-drawer': drawer}">
+        <router-outlet></router-outlet>
+    </div>
+</div>

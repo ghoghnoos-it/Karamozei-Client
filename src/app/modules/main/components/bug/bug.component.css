@@ -1,0 +1,68 @@
+div.container {
+    position: relative;
+    height: calc(100vh - 80px);
+    margin-right: -5px;
+    margin-top: -5px;
+    padding-right: 5px;
+}
+
+div.container::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fafafa;
+    width: 100%;
+    z-index: -1;
+}
+
+mdc-card {
+    position: relative;
+    margin: 15px 10px;
+    padding: 20px;
+    width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+mdc-card mdc-icon {
+    background-color: #f3f3f3;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mdc-card h2 {
+    margin: 0;
+}
+
+mdc-card h2 span {
+    font-size: .8rem;
+}
+
+mdc-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #888;
+}
+
+mdc-card ol {
+    line-height: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+    div.container {
+        margin-top: -10px;
+        height: calc(100vh - 60px);
+    }
+    mdc-card {
+        width: 100%;
+        margin-left: 10px;
+    }
+}

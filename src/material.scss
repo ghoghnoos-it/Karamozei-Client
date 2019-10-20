@@ -1,0 +1,8 @@
+$mdc-theme-primary: #1565c0; // primary color
+$mdc-theme-secondary: #388e3c; // secondary color
+
+@import "~@angular-mdc/theme/material";
+
+.icon-button-small {
+    @include mdc-icon-button-size(18px);
+  }

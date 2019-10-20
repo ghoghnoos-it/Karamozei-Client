@@ -1,0 +1,23 @@
+.flex{
+    display: flex;
+}
+
+.flex.nowrap, .flex.no-wrap{
+    flex-wrap: nowrap;
+}
+
+.flex.wrap{
+    flex-wrap: wrap;
+}
+
+.flex.column{
+    flex-direction: column
+}
+
+.flex.c-ai{
+    align-items: center;
+}
+
+.flex.c-jc{
+    justify-content: center;
+}

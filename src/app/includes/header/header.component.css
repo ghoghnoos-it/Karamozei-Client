@@ -1,0 +1,27 @@
+mdc-top-app-bar {
+    background-color: #363640;
+    z-index: 7;
+}
+
+mdc-drawer {
+    position: fixed !important;
+    height: 100vh;
+    padding-top: 70px;
+}
+
+mdc-drawer div.footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+}
+
+mdc-drawer div.footer div.app-owner {
+    font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 600px) {
+    mdc-drawer{
+        padding-top: 60px;
+    }
+}

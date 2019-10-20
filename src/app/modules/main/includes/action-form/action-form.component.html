@@ -1,0 +1,34 @@
+<mdc-dialog>
+    <mdc-dialog-container>
+        <mdc-dialog-surface>
+            <mdc-dialog-title class="font">
+                <span *ngIf="action['id']">ویرایش </span><span>فعالیت روز {{data['title']}}</span>
+            </mdc-dialog-title>
+            <mdc-dialog-content>
+                <br>
+                <mdc-textarea label="توضیح فعالیت شما" rows="8" cols="40" required [(ngModel)]="action['details']">
+                </mdc-textarea>
+                <br><br>
+                <span>زمان شروع</span>
+                <br>
+                <app-time-picker [hour]="action['time']['start']['hour']" [minute]="action['time']['start']['minute']"
+                    (onChange)="setTime('start', $event)"></app-time-picker>
+                <br>
+                <span>زمان پایان</span>
+                <br>
+                <app-time-picker [hour]="action['time']['end']['hour']" [minute]="action['time']['end']['minute']"
+                    [min]="action['time']['start']['hour']" (onChange)="setTime('end', $event)">
+                </app-time-picker>
+                <br>
+                <!-- Pixle -->
+                <span>مدت فعالیت : {{action['time']['max']['hour'] || 0}} ساعت و
+                    {{action['time']['max']['minute'] || 0}}
+                    دقیقه</span>
+            </mdc-dialog-content>
+            <mdc-dialog-actions>
+                <button mdc-button mdcDialogAction="close" [disabled]="loading.show">لغو</button>
+                <button mdc-button raised secondary (click)="submit()" [disabled]="loading.show">ثبت</button>
+            </mdc-dialog-actions>
+        </mdc-dialog-surface>
+    </mdc-dialog-container>
+</mdc-dialog>

@@ -1,0 +1,144 @@
+div.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 300px;
+    background-color: #363640;
+    z-index: -1;
+}
+
+div.today div.month_name {
+    font-size: 2rem;
+    color: #fff;
+    margin-right: 50px;
+}
+
+mdc-card {
+    position: relative;
+    margin: 30px;
+}
+
+mdc-card div.flex.wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+div.days {
+    padding: 15px 0;
+}
+
+div.days div.day {
+    width: 14.28%;
+    text-align: center;
+}
+
+div.column {
+    width: 14.15%;
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    transition: all .2s;
+}
+
+div.column.today:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+    transition: all .2s;
+}
+
+div.column span {
+    font-size: 1.4rem;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+div.column.today {
+    cursor: pointer;
+    color: var( --mdc-theme-primary, #1565c0);
+    background-color: rgba(21, 101, 192, 0.2);
+}
+
+div.column.not-today {
+    color: #ccc;
+    pointer-events: none;
+}
+
+div.records {
+    margin-top: 20px;
+}
+
+div.records mdc-card {
+    width: 400px;
+    height: 100%;
+    margin: 10px;
+}
+
+div.records mdc-card p {
+    padding: 0 10px;
+}
+
+div.time {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+div.time span {
+    font-size: 1rem;
+}
+
+button[mdc-fab] {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+mdc-card.error {
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto !important;
+}
+
+mdc-card.error mdc-icon {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 5rem;
+}
+
+mdc-card.error p {
+    padding: 0 20px 30px 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    mdc-card {
+        margin: 5px;
+        border-radius: 0;
+        margin-top: 20px;
+    }
+    div.days div.day {
+        font-size: .8rem;
+    }
+    div.records mdc-card {
+        width: calc(100% - 10px);
+        margin: 10px 10px;
+    }
+    div.records mdc-card:last-child {
+        margin-bottom: 100px;
+    }
+    mdc-card.error {
+        margin: 0 10px !important;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    div.records mdc-card {
+        width: 500px !important;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    div.records mdc-card {
+        width: 300px;
+    }
+}

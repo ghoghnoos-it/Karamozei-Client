@@ -1,0 +1,78 @@
+<div class="background" *ngIf="action != null || user != null"></div>
+
+<div class="container" *ngIf="action != null && account['info']['permission'] == 'user'">
+    <div class="flex wrap">
+        <mdc-card [ngClass]="['chart']">
+            <mdc-tab-bar #tab (activated)="changeChart($event)">
+                <mdc-tab-scroller>
+                    <mdc-tab label="گذرانده شده"></mdc-tab>
+                    <mdc-tab label="تایید شده"></mdc-tab>
+                </mdc-tab-scroller>
+            </mdc-tab-bar>
+            <canvas id="time"></canvas>
+        </mdc-card>
+        <div class="flex column">
+            <mdc-card [ngClass]="['data']">
+                <div class="title">ساعات گذرانده شده</div>
+                <div class="value"><span>{{time['notVerified'] || 0}}</span> / {{time['full']}}</div>
+            </mdc-card>
+            <mdc-card [ngClass]="['data']">
+                <div class="title">ساعات تایید شده شده</div>
+                <div class="value"><span>{{time['verified'] || 0}}</span> / {{time['full']}}</div>
+            </mdc-card>
+        </div>
+        <mdc-card [ngClass]="['data']">
+            <div class="title">روز های گذرانده شده</div>
+            <div class="value"><span>{{action.length || 0}}</span> روز</div>
+        </mdc-card>
+    </div>
+    <div class="flex wrap">
+        <mdc-card [ngClass]="['chart']">
+            <canvas id="score"></canvas>
+        </mdc-card>
+        <div class="flex column">
+            <mdc-card [ngClass]="['data']">
+                <div class="title">امتیاز کل</div>
+                <div class="value"><span>{{score.full || 0}}</span> / {{action.length * 100}}</div>
+            </mdc-card>
+            <mdc-card [ngClass]="['data']">
+                <div class="title">امتیاز منفی</div>
+                <div class="value"><span>{{(score.full - (action.length * 100)) || 0}}</span></div>
+            </mdc-card>
+        </div>
+        <mdc-card [ngClass]="['data']">
+            <div class="title">امتیاز شما</div>
+            <div class="value"><span>{{score.yours || 0}}</span> / 100</div>
+        </mdc-card>
+    </div>
+</div>
+
+<div class="container" *ngIf="user != null && account['info']['permission'] != 'user'">
+    <h2>ترم {{season}}</h2>
+    <mdc-data-table>
+        <table mdcDataTableTable>
+            <thead>
+                <tr mdcDataTableHeaderRow>
+                    <th mdcDataTableHeaderCell>نام</th>
+                    <th mdcDataTableHeaderCell>نام خانوادگی</th>
+                    <th mdcDataTableHeaderCell>شماره تماس</th>
+                    <th mdcDataTableHeaderCell [ngClass]="['left']"></th>
+                    <th mdcDataTableHeaderCell [ngClass]="['left']"></th>
+                </tr>
+            </thead>
+            <tbody mdcDataTableContent>
+                <tr mdcDataTableRow *ngFor="let item of user; let i = index">
+                    <td mdcDataTableCell>{{item['name']['first'] || "ثبت نشده"}}</td>
+                    <td mdcDataTableCell>{{item['name']['last'] || "ثبت نشده"}}</td>
+                    <td mdcDataTableCell>{{item['phone']['number']}}</td>
+                    <td mdcDataTableCell [ngClass]="['left']">
+                        <button mdc-icon-button icon="visibility" (click)="showUser(item['id'])"></button>
+                    </td>
+                    <td mdcDataTableCell [ngClass]="['left']">
+                        <button mdc-icon-button icon="call" (click)="makeCall(item['phone']['number'])"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mdc-data-table>
+</div>

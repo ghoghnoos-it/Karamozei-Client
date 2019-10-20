@@ -1,0 +1,87 @@
+div.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 200px;
+    background-color: #363640;
+    z-index: -1;
+}
+
+div.flex.wrap{
+    height: 100%;
+    width: 100%;
+}
+
+mdc-card {
+    position: relative;
+    padding: 20px;
+    margin: 20px;
+    max-width: 400px;
+    width: 400px;
+    height: 100%;
+}
+
+mdc-text-field, mdc-select {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+button[mdc-fab] {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+p.error{
+    color: #ff4d00;
+}
+
+div.session{
+    position: relative;
+}
+
+div.session:not(:last-child){
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+div.session div.device{
+    background-color: #f3f3f3;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-left: 20px;;
+}
+
+div.session div.os{
+    font-weight: bold;
+}
+
+div.session div.browser{
+    font-size: 0.8rem;
+}
+
+div.session span,
+div.session button{
+    position: absolute;
+    left: 0;
+    top: 5px;
+}
+div.session span{
+    color: var(--mdc-theme-secondary);
+}
+
+@media only screen and (max-width: 600px) {
+    mdc-card{
+        width: 100%;
+        max-width: 100%;
+    }
+    button[mdc-fab] {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+    }    
+}

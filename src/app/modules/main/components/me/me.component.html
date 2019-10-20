@@ -1,0 +1,124 @@
+<div class="background"></div>
+<div class="container flex wrap">
+    <mdc-tab-bar fixed #tab [ngClass]="['white']">
+        <mdc-tab-scroller>
+            <mdc-tab label="اطلاعات شخصی" id="personal"></mdc-tab>
+            <mdc-tab label="اطلاعات والدین" id="parrent" *ngIf="account['info']['permission'] == 'user'"></mdc-tab>
+            <mdc-tab label="نشست های فعال" id="sessions"></mdc-tab>
+        </mdc-tab-scroller>
+    </mdc-tab-bar>
+    <mdc-card *ngIf="tab.activeTabIndex == 0">
+        <h3 mdcHeadline6>اطلاعات شخصی</h3>
+        <mdc-text-field outlined label="نام" name="firstname" autocomplete="off"
+            [(ngModel)]="account.info['name']['first']"></mdc-text-field>
+        <mdc-text-field outlined label="نام خانوادگی" name="lastname" autocomplete="off"
+            [(ngModel)]="account.info['name']['last']"></mdc-text-field>
+        <mdc-text-field outlined label="کد ملی" type="tel" name="personal_code" autocomplete="off"
+            [(ngModel)]="account.info['info']['personal_code']">
+        </mdc-text-field>
+        <mdc-text-field outlined label="سال تولد ( مثال:1398 )" type="tel" name="birth_year" autocomplete="off" maxlength="4"
+            [(ngModel)]="account.info['info']['birth']['year']" *ngIf="account['info']['permission'] == 'user'">
+        </mdc-text-field>
+        <mdc-text-field outlined label="شماره تماس" type="tel" name="phone_number" disabled
+            [(ngModel)]="account.info['phone']['number']">
+        </mdc-text-field>
+        <mdc-select *ngIf="account['info']['permission'] == 'user'" placeholder="رشته تحصیلی" outlined
+            [(ngModel)]="account.info['field']">
+            <mdc-menu>
+                <mdc-list>
+                    <mdc-list-item value="computer">کامپیوتر</mdc-list-item>
+                    <mdc-list-item value="graphic">گرافیک</mdc-list-item>
+                    <mdc-list-item value="other">دیگر</mdc-list-item>
+                </mdc-list>
+            </mdc-menu>
+        </mdc-select>
+        <br>
+        <span>جنسیت</span>
+        <div>
+            <mdc-radio-group [(ngModel)]="account.info['info']['gender']">
+                <mdc-form-field>
+                    <mdc-radio name="gender" value="man"></mdc-radio>
+                    <label>آقا</label>
+                </mdc-form-field>
+                <mdc-form-field>
+                    <mdc-radio name="gender" value="woman"></mdc-radio>
+                    <label>خانم</label>
+                </mdc-form-field>
+                <mdc-form-field>
+                    <mdc-radio name="gender" value="other"></mdc-radio>
+                    <label>دیگر</label>
+                </mdc-form-field>
+            </mdc-radio-group>
+        </div>
+        <br>
+        <div *ngIf="account['info']['permission'] == 'user'">
+            <span>وضعیت تاهل</span>
+            <div>
+                <mdc-radio-group [(ngModel)]="account.info['info']['married']">
+                    <mdc-form-field>
+                        <mdc-radio name="married" value="false"></mdc-radio>
+                        <label>مجرد</label>
+                    </mdc-form-field>
+                    <mdc-form-field>
+                        <mdc-radio name="married" value="true"></mdc-radio>
+                        <label>متاهل</label>
+                    </mdc-form-field>
+                </mdc-radio-group>
+            </div>
+        </div>
+    </mdc-card>
+
+    <mdc-card *ngIf="tab.activeTabIndex == 1 && account['info']['permission'] == 'user'">
+        <h3 mdcHeadline6>ارتباط والدین</h3>
+        <p class="error">توجه داشته باشین که ما فقط در صورت بروز هرگونه اتفاق با والدین شما تماس گرفته و آن ها را مطلع خواهیم کرد.</p>
+        <mdc-form-field class="flex column">
+            <mdc-text-field outlined label="نام و نام خانوادگی" [(ngModel)]="account.info['parrent']['name']">
+            </mdc-text-field>
+            <mdc-select placeholder="نسبت" outlined [(ngModel)]="account.info['parrent']['relationship']">
+                <mdc-menu>
+                    <mdc-list>
+                        <mdc-list-item value="پدر">پدر</mdc-list-item>
+                        <mdc-list-item value="مادر">مادر</mdc-list-item>
+                        <mdc-list-item value="همسر">همسر</mdc-list-item>
+                        <mdc-list-item value="دیگر">دیگر</mdc-list-item>
+                    </mdc-list>
+                </mdc-menu>
+            </mdc-select>
+            <mdc-text-field outlined label="شماره تماس" [(ngModel)]="account.info['parrent']['phone']"></mdc-text-field>
+        </mdc-form-field>
+    </mdc-card>
+    <div *ngIf="(tab.activeTabIndex == 2 && account['info']['permission'] == 'user') || (account['info']['permission'] != 'user' && tab.activeTabIndex == 1)"
+        class="flex wrap c-jc">
+        <mdc-card>
+            <h3>نشست های فعال شما</h3>
+            <p>شما میتوانید دستگاه های که با آن وارد به حساب کاربری خود شده اید را مدیریت کنید.</p>
+            <p class="error" *ngIf="sessions && sessions.length == 0">هیچ نشست فعالی ثبت نشده است.</p>
+            <div class="session flex nowrap c-ai" *ngFor="let item of sessions; let i = index">
+                <div class="device flex c-ai c-jc">
+                    <mdc-icon *ngIf="item['isMobile'] == false && item['isDesktop'] == false">phonelink</mdc-icon>
+                    <mdc-icon *ngIf="item['isMobile'] == true">smartphone</mdc-icon>
+                    <mdc-icon *ngIf="item['isDesktop'] == true">computer</mdc-icon>
+                </div>
+                <div class="flex column">
+                    <div class="os no-font" *ngIf="item['isMobile'] != true && item['os'] != 'Linux'">{{item['os']}}
+                    </div>
+                    <div class="os no-font" *ngIf="item['isMobile'] == true && item['os'] == 'Linux'">Android</div>
+                    <div class="browser no-font">{{item['browser']}}</div>
+                </div>
+                <span *ngIf="item['current'] == true">جاری</span>
+                <button *ngIf="item['current'] == false" mdc-icon-button class="icon-button-small" icon="close"
+                    (click)="kick(i)"></button>
+            </div>
+        </mdc-card>
+        <mdc-card>
+            <h3>خروج از حساب کاربری</h3>
+            <p>با خروج از حساب کاربری تمامی اطلاعات شما حفظ شده و شما می توانید در دستگاه دیگر و در زمان و مکانی دیگر به
+                اطلاعات خود دسترسی داشته باشد.</p>
+            <button style="margin-top: 20px; margin-right: auto;" mdc-button raised (click)="logout()">خروج از
+                حساب</button>
+        </mdc-card>
+    </div>
+    <button
+        *ngIf="(tab.activeTabIndex != 2 && account['info']['permission'] == 'user') || (tab.activeTabIndex != 1 && account['info']['permission'] != 'user')"
+        mdc-fab extended icon="save" label="ثبت اطلاعات" (click)="submit()" [disabled]="loading.show == true"></button>
+</div>

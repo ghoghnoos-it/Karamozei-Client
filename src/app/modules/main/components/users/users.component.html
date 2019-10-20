@@ -1,0 +1,175 @@
+<div class="background"></div>
+<div class="container flex column">
+    <div class="head flex nowrap c-ai">
+        <button mdc-button secondary raised *ngIf="permission != 'user' && mode == 'table'"
+            (click)="setEditable({name: { first: null, last: null }, info: { personal_code: null, gender: null }, phone: { number: null }})">
+            <mdc-icon>add</mdc-icon>افزودن
+        </button>
+        <mdc-select placeholder="نوع کاربر" (valueChange)="setData($event)" [(ngModel)]="permission">
+            <mdc-menu>
+                <mdc-list>
+                    <mdc-list-item value="user">کارآموز</mdc-list-item>
+                    <mdc-list-item value="teacher">استاد</mdc-list-item>
+                    <mdc-list-item value="admin">مدیر</mdc-list-item>
+                </mdc-list>
+            </mdc-menu>
+        </mdc-select>
+    </div>
+    <div class="table" *ngIf="mode == 'table' && data == null">
+        <mdc-data-table>
+            <table mdcDataTableTable>
+                <thead>
+                    <tr mdcDataTableHeaderRow>
+                        <th mdcDataTableHeaderCell>نام</th>
+                        <th mdcDataTableHeaderCell>نام خانوادگی</th>
+                        <th mdcDataTableHeaderCell>شماره تماس</th>
+                        <th mdcDataTableHeaderCell [ngClass]="['left']"></th>
+                        <th mdcDataTableHeaderCell [ngClass]="['left']"></th>
+                        <th mdcDataTableHeaderCell [ngClass]="['left']"></th>
+                    </tr>
+                </thead>
+                <tbody mdcDataTableContent>
+                    <tr mdcDataTableRow *ngFor="let item of items; let i = index">
+                        <td mdcDataTableCell>{{item['name']['first'] || "ثبت نشده"}}</td>
+                        <td mdcDataTableCell>{{item['name']['last'] || "ثبت نشده"}}</td>
+                        <td mdcDataTableCell>{{item['phone']['number']}}</td>
+                        <td mdcDataTableCell [ngClass]="['left']">
+                            <button mdc-icon-button icon="delete" (click)="delete(item['id'], i)"></button>
+                        </td>
+                        <td mdcDataTableCell [ngClass]="['left']">
+                            <button mdc-icon-button icon="edit" (click)="setEditable(item)"></button>
+                        </td>
+                        <td mdcDataTableCell [ngClass]="['left']">
+                            <button mdc-icon-button icon="call" (click)="makeCall(item['phone']['number'])"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mdc-data-table>
+    </div>
+    <mdc-card [mdcElevation]="3" *ngIf="mode == 'edit' && data != null">
+        <div *ngIf="permission == 'user'">
+            <mdc-tab-bar fixed (activated)="setTab($event)">
+                <mdc-tab-scroller>
+                    <mdc-tab label="اطلاعات شخصی"></mdc-tab>
+                    <mdc-tab label="اطلاعات والدین"></mdc-tab>
+                    <mdc-tab label="اطلاعات کاربر"></mdc-tab>
+                </mdc-tab-scroller>
+            </mdc-tab-bar>
+        </div>
+        <div class="content" *ngIf="(permission == 'user' && index === 0) || permission != 'user'">
+            <h3 mdcHeadline6>اطلاعات شخصی</h3>
+            <mdc-text-field outlined label="نام" name="firstname" autocomplete="off"
+                [(ngModel)]="data['name']['first']"></mdc-text-field>
+            <br>
+            <mdc-text-field outlined label="نام خانوادگی" name="lastname" autocomplete="off"
+                [(ngModel)]="data['name']['last']"></mdc-text-field>
+            <br>
+            <mdc-text-field outlined label="کد ملی" type="tel" name="personal_code" autocomplete="off"
+                [(ngModel)]="data['info']['personal_code']">
+            </mdc-text-field>
+            <br>
+            <mdc-text-field *ngIf="permission == 'user'" outlined label="سال تولد ( مثال:1398)" type="tel" name="birth_year"
+                autocomplete="off" maxlength="4" [(ngModel)]="data['info']['birth']['year']">
+            </mdc-text-field>
+            <br>
+            <mdc-text-field outlined label="شماره تماس" type="tel" name="phone_number" autocomplete="off"
+                [(ngModel)]="data['phone']['number']">
+            </mdc-text-field>
+            <br>
+            <mdc-select *ngIf="permission == 'user'" placeholder="رشته تحصیلی" outlined [(ngModel)]="data['field']">
+                <mdc-menu>
+                    <mdc-list>
+                        <mdc-list-item value="computer">کامپیوتر</mdc-list-item>
+                        <mdc-list-item value="graphic">گرافیک</mdc-list-item>
+                        <mdc-list-item value="other">دیگر</mdc-list-item>
+                    </mdc-list>
+                </mdc-menu>
+            </mdc-select>
+            <br>
+            <span>جنسیت</span>
+            <div>
+                <mdc-radio-group [(ngModel)]="data['info']['gender']">
+                    <mdc-form-field>
+                        <mdc-radio name="gender" value="man"></mdc-radio>
+                        <label>آقا</label>
+                    </mdc-form-field>
+                    <mdc-form-field>
+                        <mdc-radio name="gender" value="woman"></mdc-radio>
+                        <label>خانم</label>
+                    </mdc-form-field>
+                    <mdc-form-field>
+                        <mdc-radio name="gender" value="other"></mdc-radio>
+                        <label>دیگر</label>
+                    </mdc-form-field>
+                </mdc-radio-group>
+            </div>
+            <br>
+            <div *ngIf="permission == 'user'">
+                <span>وضعیت تاهل</span>
+                <div>
+                    <mdc-radio-group [(ngModel)]="data['info']['married']">
+                        <mdc-form-field>
+                            <mdc-radio name="married" value="false"></mdc-radio>
+                            <label>مجرد</label>
+                        </mdc-form-field>
+                        <mdc-form-field>
+                            <mdc-radio name="married" value="true"></mdc-radio>
+                            <label>متاهل</label>
+                        </mdc-form-field>
+                    </mdc-radio-group>
+                </div>
+            </div>
+        </div>
+        <div class="content" *ngIf="permission == 'user' && index === 1">
+            <h3 mdcHeadline6>اطلاعات والدین</h3>
+            <mdc-form-field class="flex column">
+                <mdc-text-field autocomplete="off" outlined label="نام و نام خانوادگی"
+                    [(ngModel)]="data['parrent']['name']">
+                </mdc-text-field>
+                <mdc-select placeholder="نسبت" outlined [(ngModel)]="data['parrent']['relationship']">
+                    <mdc-menu>
+                        <mdc-list>
+                            <mdc-list-item value="پدر">پدر</mdc-list-item>
+                            <mdc-list-item value="مادر">مادر</mdc-list-item>
+                            <mdc-list-item value="همسر">همسر</mdc-list-item>
+                            <mdc-list-item value="دیگر">دیگر</mdc-list-item>
+                        </mdc-list>
+                    </mdc-menu>
+                </mdc-select>
+                <mdc-text-field autocomplete="off" outlined label="شماره تماس" [(ngModel)]="data['parrent']['phone']">
+                </mdc-text-field>
+            </mdc-form-field>
+        </div>
+        <div class="content" *ngIf="permission == 'user' && index === 2">
+            <h3 mdcHeadline6> اطلاعات کاربری</h3>
+            <div class="flex column">
+                <mdc-text-field autocomplete="off" outlined label="سال ورود ( مثال :1398 )" [(ngModel)]="data['entry']['year']">
+                </mdc-text-field>
+                <mdc-select placeholder="فصل" outlined [(ngModel)]="data['entry']['season']">
+                    <mdc-menu>
+                        <mdc-list>
+                            <mdc-list-item value="null">هیج کدام</mdc-list-item>
+                            <mdc-list-item value="تابستان">ترم تابستان</mdc-list-item>
+                            <mdc-list-item value="پاییز">ترم پاییز</mdc-list-item>
+                            <mdc-list-item value="زمستان-بهار">ترم زمستان و بهار</mdc-list-item>
+                        </mdc-list>
+                    </mdc-menu>
+                </mdc-select>
+                <mdc-select placeholder="استاد کارآموزی" outlined [(ngModel)]="data['teacher']">
+                    <mdc-menu>
+                        <mdc-list>
+                            <mdc-list-item *ngFor="let teacher of teachers" [value]="teacher['id']">
+                                {{teacher['name']['first']}} {{teacher['name']['last']}}</mdc-list-item>
+                        </mdc-list>
+                    </mdc-menu>
+                </mdc-select>
+                <mdc-text-field outlined type="number" [min]="0"  label="ساعات کارآموزی" [(ngModel)]="data['time']"></mdc-text-field>
+            </div>
+        </div>
+        <div class="buttons">
+            <button mdc-button raised secondary (click)="update()">{{data['id']?"ویرایش":"ثبت"}}</button>
+            <button mdc-button (click)="mode = 'table'; data = null">لغو</button>
+        </div>
+    </mdc-card>
+</div>
