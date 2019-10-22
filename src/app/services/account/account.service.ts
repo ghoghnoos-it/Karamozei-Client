@@ -24,7 +24,7 @@ export class Account {
     this.info = info;
     this.login = true;
 
-    const data = await crypto.AES.encrypt(JSON.stringify({ auth, info }), password);
+    const data = await crypto.AES.encrypt(JSON.stringify({ auth }), password);
     window.localStorage.setItem('account', data.toString());
     return Promise.resolve();
   }
@@ -36,10 +36,9 @@ export class Account {
       try {
         let result = await crypto.AES.decrypt(data, password);
         result = await JSON.parse(result.toString(crypto.enc.Utf8));
-        this.info = result['info'];
         this.auth = result['auth'];
         this.login = true;
-        return { auth: this.auth, info: this.info };
+        return { auth: this.auth };
       } catch (error) {
         this.login = false;
       }
@@ -50,7 +49,7 @@ export class Account {
       access_token: null,
       refresh_token: null
     };
-    this.info = {};
+    this.info = null;
     this.login = false;
     window.localStorage.removeItem("account");
     this.router.navigate(['/']);

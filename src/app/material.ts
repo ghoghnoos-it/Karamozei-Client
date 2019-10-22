@@ -8,7 +8,8 @@ import {
   MdcButtonModule,
   MdcLinearProgressModule,
   MdcDialogModule,
-  MdcCardModule
+  MdcCardModule,
+  MdcSnackbarModule
 } from '@angular-mdc/web';
 
 const array = [
@@ -19,7 +20,8 @@ const array = [
   MdcButtonModule,
   MdcLinearProgressModule,
   MdcDialogModule,
-  MdcCardModule
+  MdcCardModule,
+  MdcSnackbarModule
 ];
 
 @NgModule({

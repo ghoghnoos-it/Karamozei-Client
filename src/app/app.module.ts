@@ -9,13 +9,15 @@ import { LoggedinGuard, NotLoggedinGuard } from './gurds/loggedin/loggedin.guard
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './includes/header/header.component';
 import { BugComponent } from './includes/bug/bug.component';
+import { SplashComponent } from './includes/splash/splash.component';
 import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    BugComponent
+    BugComponent,
+    SplashComponent
   ],
   imports: [
     BrowserModule,

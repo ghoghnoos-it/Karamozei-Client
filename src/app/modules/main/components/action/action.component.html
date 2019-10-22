@@ -1,7 +1,16 @@
 <div class="background"></div>
-<div class="today">
-    <div class="month_name flex nowrap c-ai"><span
-            *ngIf="view == 'records'">{{day}}ام</span>&nbsp;<span>{{today[3]}} ماه</span></div>
+<div class="today flex nowrap c-ai">
+    <div *ngIf="view == 'records'" class="month_name flex nowrap c-ai"><span>{{day}}ام</span>&nbsp;<span>{{today[3]}}
+            ماه</span></div>
+    <mdc-select [(ngModel)]="month" (valueChange)="setMonth($event)">
+        <mdc-menu>
+            <mdc-list>
+                <div *ngFor="let name of months_name; let i = index">
+                    <mdc-list-item [value]="i" *ngIf="i<=todayMonth-1">{{name}}</mdc-list-item>
+                </div>
+            </mdc-list>
+        </mdc-menu>
+    </mdc-select>
 </div>
 <mdc-card *ngIf="view == 'calender'">
     <div class="days flex nowrap">
@@ -9,8 +18,9 @@
     </div>
     <div *ngFor="let week of days" class="flex nowrap">
         <div *ngFor="let day of week" class="column"
-            [ngClass]="{'today': today[2] == day, 'not-today': day > today[2] || day == ''}"
-            (click)="openForm(day)"><span>{{day}}</span></div>
+            [ngClass]="{'today': (today[2] == day && today[1] == todayMonth), 'not-today': day == '' || (day > today[2] && today[1] == todayMonth)}"
+            (click)="openForm(day)">
+            <span>{{day}}</span></div>
     </div>
 </mdc-card>
 <div class="records flex wrap" *ngIf="view == 'records'">

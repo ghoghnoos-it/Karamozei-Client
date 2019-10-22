@@ -15,6 +15,11 @@ div.today div.month_name {
     margin-right: 50px;
 }
 
+div.today mdc-select{
+    margin-right: auto;
+    margin-left: 30px;
+}
+
 mdc-card {
     position: relative;
     margin: 30px;
@@ -53,8 +58,11 @@ div.column span {
     margin-right: 10px;
 }
 
-div.column.today {
+div.column:not(.not-today){
     cursor: pointer;
+}
+
+div.column.today {
     color: var( --mdc-theme-primary, #1565c0);
     background-color: rgba(21, 101, 192, 0.2);
 }
@@ -111,6 +119,9 @@ mdc-card.error p {
 }
 
 @media only screen and (max-width: 600px) {
+    div.today mdc-select{
+        margin-left: 10px;
+    }
     mdc-card {
         margin: 5px;
         border-radius: 0;

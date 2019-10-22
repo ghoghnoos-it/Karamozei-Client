@@ -9,11 +9,20 @@ div.content.no-drawer {
     transition: all .2s;
 }
 
-mdc-linear-progress{
+mdc-linear-progress {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 999;
+}
+
+app-splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 999;
 }
 

@@ -17,10 +17,13 @@ import { Toast } from '../../../../services/toast/toast.service';
 export class ActionComponent implements OnInit {
 
   public days_name: String[] = ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"];
+  public months_name: String[] = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
   public today: any[] = [];
   public days: any[] = [];
   public data: Object[] = null;
   public day: string;
+  public month: number;
+  public todayMonth: number = 0;
   public view: string = 'calender';
   constructor(private dialog: MdcDialog, private snackbar: MdcSnackbar, private http: Http, public account: Account, public loading: Loading, private toast: Toast) { }
 
@@ -28,7 +31,13 @@ export class ActionComponent implements OnInit {
     this.setDays();
   }
 
-  setDays() {
+  setMonth(event) {
+    this.setDays(event.index + 1);
+  }
+  setDays(MONTH = 0) {
+    this.today = [];
+    this.days = [];
+    this.day = null;
     /**
      * مهر ۱۳۹۸
      * [
@@ -41,7 +50,7 @@ export class ActionComponent implements OnInit {
      */
     let today = moment().locale('fa').format("YYYY/M/D").split('/'),
       year = parseInt(today[0]),
-      month = parseInt(today[1]),
+      month = (MONTH == 0) ? parseInt(today[1]) : MONTH,
       day = parseInt(today[2]),
       todayEn = moment.from(`${year}/${month}/1`, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD').split('/'),
       monthName = moment(`${todayEn[0]}/${todayEn[1]}/${todayEn[2]}`).locale('fa').format('jMMMM'),
@@ -53,6 +62,8 @@ export class ActionComponent implements OnInit {
 
     this.today = [year, month, day, monthName];
     this.day = day.toString();
+    this.month = (month - 1);
+    if (MONTH == 0) this.todayMonth = month;
     function setWeek(index = 0) {
       let array = Array(7);
       if (index == 0) {
@@ -160,7 +171,7 @@ export class ActionComponent implements OnInit {
   }
 
   setVerified(id = "", index = 0) {
-    this.confirm("آیا مطمعین به تایید این فعالیت هستید ؟", () => {
+    this.confirm("آیا مطمئن به تایید این فعالیت هستید ؟", () => {
       this.http.request('main', '/action/admin', 'PUT', { verified: true }, true, { id })
         .then((res: any) => {
           this.toast.make(res['message']['fa'], this.snackbar);
@@ -172,7 +183,7 @@ export class ActionComponent implements OnInit {
   }
 
   removeAction(id = "", index = 0) {
-    this.confirm('آیا مطمعین به حذف این فعالیت هستید ؟', () => {
+    this.confirm('آیا مطمئن به حذف این فعالیت هستید ؟', () => {
       this.http.request('main', '/action/admin', 'DELETE', {}, true, { id })
         .then((res: any) => {
           this.toast.make(res['message']['fa'], this.snackbar);

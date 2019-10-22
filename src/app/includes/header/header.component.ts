@@ -56,10 +56,10 @@ export class HeaderComponent implements OnInit {
     window.onresize = () => this.setOpen();
     this.setOpen();
     this.pwaEvent();
-    setTimeout(() => {
-      this.phone = this.account.info['phone']['number'];
-    }, 100);
     setInterval(() => {
+      if(this.account.info['phone'] && this.account.info['phone']['number']){
+        this.phone = this.account.info['phone']['number'];
+      }
       if (this.account.info['name'] && this.account.info['name']['first'] && this.account.info['name']['last']) {
         this.name = this.account.info['name']['first'] + ' ' + this.account.info['name']['last'];
       }

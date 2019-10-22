@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdcDialog } from '@angular-mdc/web';
+import { MdcDialog, MdcSnackbar } from '@angular-mdc/web';
 import { BugComponent } from './includes/bug/bug.component';
 import { Account } from './services/account/account.service';
 import { Http } from './services/http/http.service';
@@ -15,10 +15,15 @@ import { Versions } from './services/versions/versions.service';
 export class AppComponent implements OnInit {
   public panel: Boolean = false;
   public drawer: Boolean = true;
+  public splash: Boolean = true;
   private bug: Boolean = false;
-  constructor(private account: Account, private http: Http, public loading: Loading, private versions: Versions, private router: Router, private dialog: MdcDialog) { }
+  constructor(private account: Account, private http: Http, public loading: Loading, private versions: Versions, private router: Router, private dialog: MdcDialog, private snackbar: MdcSnackbar) { }
   ngOnInit() {
-    this.account.load();
+    this.account.load().then(() => {
+      if (this.account.login == true) {
+        this.getMe();
+      }
+    })
     this.panel = window.location.pathname != '/';
     this.changeThemeColor();
     this.router.events.subscribe(() => {
@@ -39,6 +44,22 @@ export class AppComponent implements OnInit {
     } else {
       document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
     }
+  }
+  getMe() {
+    this.http.request('main', '/user/me', 'GET', {}, true)
+      .then((res: any) => {
+        if (res['status'] == true) {
+          this.splash = false;
+          this.account.set(this.account.auth, res['data']);
+        } else {
+          this.account.logout();
+        }
+      }).catch(() => {
+        this.snackbar.open("خطایی رخ داده است.", "خروج از حساب")
+        .afterDismiss().subscribe(()=>{
+          this.account.logout();
+        })
+      })
   }
   showBug() {
     let database = window.localStorage.getItem('latest')
