@@ -42,6 +42,11 @@ export class HeaderComponent implements OnInit {
       permission: ['admin']
     },
     {
+      path: "/panel/help",
+      icon: "help",
+      title: "سوالات متداول"
+    },
+    {
       path: '/panel/bug',
       icon: 'bug_report',
       title: 'گزارش بروزرسانی'
@@ -57,10 +62,10 @@ export class HeaderComponent implements OnInit {
     this.setOpen();
     this.pwaEvent();
     setInterval(() => {
-      if(this.account.info['phone'] && this.account.info['phone']['number']){
+      if (this.account.info && this.account.info['phone'] && this.account.info['phone']['number']) {
         this.phone = this.account.info['phone']['number'];
       }
-      if (this.account.info['name'] && this.account.info['name']['first'] && this.account.info['name']['last']) {
+      if (this.account.info && this.account.info['name'] && this.account.info['name']['first'] && this.account.info['name']['last']) {
         this.name = this.account.info['name']['first'] + ' ' + this.account.info['name']['last'];
       }
     }, 100);

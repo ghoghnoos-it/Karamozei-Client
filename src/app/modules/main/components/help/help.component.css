@@ -1,0 +1,17 @@
+div.container{
+    margin: 20px;
+}
+
+mdc-card{
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+mdc-card h3,
+mdc-card p{
+    margin: 0;
+}
+
+mdc-card h3{
+    margin-bottom: 10px;
+}

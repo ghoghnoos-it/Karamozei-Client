@@ -93,7 +93,8 @@ export class ActionComponent implements OnInit {
 
   getDay(day = moment().locale('fa').format("D")) {
     return new Promise((resolve, reject) => {
-      let date = moment().locale("fa").format("YYYY/M");
+      let date = moment().locale("fa").format("YYYY");
+      date = date + "/" + this.today[1];
       date = date + "/" + day;
       let query = ``;
       if (this.account.info['permission'] == 'user') {

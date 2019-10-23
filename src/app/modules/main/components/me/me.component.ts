@@ -34,7 +34,7 @@ export class MeComponent implements OnInit {
 
   fetch() {
     if (this.account.login == true) {
-      this.http.grapql('main', `{ me { name { first last } phone { number } info { personal_code birth { year } gender married } parrent { name relationship phone } permission } session { os browser isMobile isDesktop current } }`)
+      this.http.grapql('main', `{ me { name { first last } phone { number } info { personal_code birth { year } gender married } parrent { name relationship phone } permission field } session { os browser isMobile isDesktop current } }`)
         .then((res: any) => {
           if (res['errors'] == null) {
             this.sessions = res['data']['session'];

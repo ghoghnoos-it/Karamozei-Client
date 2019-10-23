@@ -1,4 +1,14 @@
-<div class="container">
+<mdc-card outlined>
+    <div class="flex nowrap c-ai">
+        <mdc-icon>bug_report</mdc-icon>
+        <div class="flex column" style="margin-right: 20px;">
+            <h2 mdcHeadline6>نسخه {{items[index]['version']}} <span>جاری</span></h2>
+            <h3 mdcSubtitle2>{{items[index]['released']}}</h3>
+        </div>
+        <button style="margin-right: auto;" (click)="reset()" mdc-button raised>تنظیم مجدید</button>
+    </div>
+</mdc-card>
+<div class="container ">
     <div class="flex wrap">
         <mdc-card *ngFor="let item of items; let i = index ">
             <div class="flex nowrap c-ai">

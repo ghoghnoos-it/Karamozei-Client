@@ -2,7 +2,7 @@
 <div class="today flex nowrap c-ai">
     <div *ngIf="view == 'records'" class="month_name flex nowrap c-ai"><span>{{day}}ام</span>&nbsp;<span>{{today[3]}}
             ماه</span></div>
-    <mdc-select [(ngModel)]="month" (valueChange)="setMonth($event)">
+    <mdc-select *ngIf="view == 'calender'" [(ngModel)]="month" (valueChange)="setMonth($event)">
         <mdc-menu>
             <mdc-list>
                 <div *ngFor="let name of months_name; let i = index">

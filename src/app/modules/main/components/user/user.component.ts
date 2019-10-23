@@ -36,11 +36,12 @@ export class UserComponent implements OnInit {
   }
 
   fetch(id = "") {
-    this.http.grapql('main', `{ actions(user:"${id}") { details user { name { first last } time } time { max { hour, minute } } date { year month day } score verified } }`)
-      .then((res: any) => {
+    this.http.grapql('main', `{ actions(user:"${id}") { details time { max { hour, minute } } date { year month day } score verified } users(id:"${id}" by:"user") { id name { first last } time } }`)
+      .then((res: any) => {        
         this.action = res['data']['actions'].reverse();
-        if(this.action.length != 0){
-          this.user = this.action[0]['user'];
+        this.user = res['data']['users'][0]
+        if (this.account.info['permission'] == 'admin') {
+          this.time.full = this.user['time'];
         }
         this.calc();
       })
@@ -115,7 +116,7 @@ export class UserComponent implements OnInit {
       data: {
         labels: [title, 'ساعت باقی مانده'],
         datasets: [{
-          data: [time, 240 - time],
+          data: [time, this.time.full - time],
           backgroundColor: [
             "#2196f3",
             "#6ec6ff"

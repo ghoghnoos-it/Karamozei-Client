@@ -12,16 +12,22 @@
                 <br><br>
                 <span>زمان شروع</span>
                 <br>
-                <app-time-picker [hour]="action['time']['start']['hour']" [minute]="action['time']['start']['minute']"
-                    (onChange)="setTime('start', $event)"></app-time-picker>
-                <br>
+                <mdc-form-field>
+                    <mdc-text-field outlined autocomplete="off" type="time" [value]="time['start']"
+                        (input)="setTime($event, 'start')">
+                    </mdc-text-field>
+                </mdc-form-field>
+                <br><br>
                 <span>زمان پایان</span>
                 <br>
-                <app-time-picker [hour]="action['time']['end']['hour']" [minute]="action['time']['end']['minute']"
-                    [min]="action['time']['start']['hour']" (onChange)="setTime('end', $event)">
-                </app-time-picker>
-                <br>
-                <span>مدت فعالیت : {{action['time']['max']['hour']}} ساعت و {{action['time']['max']['minute']}}
+                <mdc-form-field>
+                    <mdc-text-field outlined autocomplete="off" type="time" [value]="time['end']"
+                        (input)="setTime($event, 'end')">
+                    </mdc-text-field>
+                </mdc-form-field>
+                <br><br>
+                <span>مدت فعالیت : {{action['time']['max']['hour'] || 0}} ساعت و
+                    {{action['time']['max']['minute'] || 0}}
                     دقیقه</span>
                 <br><br>
                 <mdc-text-field autocomplete="off" label="امتیاز" type="number" [min]="0" [max]="100"

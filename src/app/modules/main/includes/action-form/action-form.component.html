@@ -2,7 +2,7 @@
     <mdc-dialog-container>
         <mdc-dialog-surface>
             <mdc-dialog-title class="font">
-                <span *ngIf="action['id']">ویرایش </span><span>فعالیت روز {{data['title']}}</span>
+                <span *ngIf="action['id']">ویرایش </span><span>فعالیت روز {{title}}</span>
             </mdc-dialog-title>
             <mdc-dialog-content>
                 <br>
@@ -11,23 +11,25 @@
                 <br><br>
                 <span>زمان شروع</span>
                 <br>
-                <app-time-picker [hour]="action['time']['start']['hour']" [minute]="action['time']['start']['minute']"
-                    (onChange)="setTime('start', $event)"></app-time-picker>
-                <br>
+                <mdc-form-field>
+                    <mdc-text-field outlined autocomplete="off" type="time" [value]="time['start']"
+                        (input)="setTime($event, 'start')"></mdc-text-field>
+                </mdc-form-field>
+                <br><br>
                 <span>زمان پایان</span>
                 <br>
-                <app-time-picker [hour]="action['time']['end']['hour']" [minute]="action['time']['end']['minute']"
-                    [min]="action['time']['start']['hour']" (onChange)="setTime('end', $event)">
-                </app-time-picker>
-                <br>
-                <!-- Pixle -->
+                <mdc-form-field>
+                    <mdc-text-field outlined autocomplete="off" type="time" [value]="time['end']"
+                        (input)="setTime($event, 'end')"></mdc-text-field>
+                </mdc-form-field>
+                <br><br>
                 <span>مدت فعالیت : {{action['time']['max']['hour'] || 0}} ساعت و
                     {{action['time']['max']['minute'] || 0}}
                     دقیقه</span>
             </mdc-dialog-content>
             <mdc-dialog-actions>
                 <button mdc-button mdcDialogAction="close" [disabled]="loading.show">لغو</button>
-                <button mdc-button raised secondary (click)="submit()" [disabled]="loading.show">ثبت</button>
+                <button mdc-button raised secondary (click)="submit()" [disabled]="disable">ثبت</button>
             </mdc-dialog-actions>
         </mdc-dialog-surface>
     </mdc-dialog-container>

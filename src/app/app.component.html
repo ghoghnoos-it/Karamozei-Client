@@ -4,8 +4,10 @@
 </div>
 <div *ngIf="panel == true">
     <app-splash *ngIf="splash == true"></app-splash>
-    <app-header (drawer)="setDrawer($event)"></app-header>
-    <div class="content" [ngClass]="{'no-drawer': drawer}">
-        <router-outlet></router-outlet>
+    <div *ngIf="splash == false">
+        <app-header (drawer)="setDrawer($event)"></app-header>
+        <div class="content" [ngClass]="{'no-drawer': drawer}">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>

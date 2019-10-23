@@ -28,6 +28,10 @@ mdc-card {
     flex-direction: column;
 }
 
+mdc-card[outlined]{
+    width: calc(100% - 55px);
+}
+
 mdc-card mdc-icon {
     background-color: #f3f3f3;
     width: 46px;
@@ -60,6 +64,9 @@ mdc-card ol {
     div.container {
         margin-top: -10px;
         height: calc(100vh - 60px);
+    }
+    mdc-card[outlined]{
+        width: calc(100% - 20px);
     }
     mdc-card {
         width: 100%;

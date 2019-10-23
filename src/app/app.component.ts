@@ -25,6 +25,9 @@ export class AppComponent implements OnInit {
       }
     })
     this.panel = window.location.pathname != '/';
+    if(this.panel == false){
+      this.splash = false;
+    }
     this.changeThemeColor();
     this.router.events.subscribe(() => {
       this.panel = window.location.pathname != '/';

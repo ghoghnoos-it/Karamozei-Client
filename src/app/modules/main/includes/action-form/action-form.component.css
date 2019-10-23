@@ -1,12 +1,12 @@
-button{
+button {
     margin-right: 10px;
 }
 
-span{
+span {
     position: relative;
     bottom: 10px;
 }
 
-mdc-textarea{
+mdc-textarea, mdc-text-field {
     width: 100%;
 }

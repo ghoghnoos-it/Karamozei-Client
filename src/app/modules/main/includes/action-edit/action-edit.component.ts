@@ -11,11 +11,21 @@ import { Loading } from '../../../../services/loading/loading.service';
 export class ActionEditComponent implements OnInit {
 
   public action: Object = {};
+  public time = {
+    "start": "00:00",
+    "end": "00:00"
+  }
   constructor(private dialogRef: MdcDialogRef<ActionEditComponent>, @Inject(MDC_DIALOG_DATA) public data: any, private http: Http, public loading: Loading, private snackbar: MdcSnackbar) { }
 
   ngOnInit() {
     if (this.data['action'] && this.data['action']['id']) {
       this.action = this.data['action'];
+      if (this.action['time']['start']) {
+        this.setDefaultTime('start', this.action['time']['start']);
+      }
+      if (this.action['time']['end']) {
+        this.setDefaultTime('end', this.action['time']['end']);
+      }
     }
     setTimeout(() => {
       this.action['time']['max'] = this.getMax();
@@ -66,9 +76,27 @@ export class ActionEditComponent implements OnInit {
     }
   }
 
-  setTime(to = '', data = { hour: "", minute: "" }) {
-    this.action['time'][to]['hour'] = data['hour'];
-    this.action['time'][to]['minute'] = data['minute'];
+  setDefaultTime(to = '', entry = { hour: "00", minute: "00" }) {
+    let time = "";
+    if (entry['hour']) {
+      if (entry['hour'].length == 1) entry['hour'] = "0" + entry['hour'];
+      time = entry['hour'];
+    } else {
+      time = "00";
+    }
+    time += ":";
+    if (entry['minute']) {
+      if (entry['minute'].length == 1) entry['minute'] = "0" + entry['minute'];
+      time += entry['minute'];
+    } else {
+      time += "00";
+    }
+    this.time[to] = time;    
+  }
+
+  setTime(data = "", to = '') {
+    let time = data.split(":");
+    this.action['time'][to] = { "hour": parseInt(time[0]), "minute": parseInt(time[1]) };
     this.action['time']['max'] = this.getMax();
   }
 

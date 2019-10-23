@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (this.account.info['permission'] == 'user') {
       this.getDataForUser();
-    } else {
+    } else if (this.account.info['permission'] != "user") {
       this.getDataForNotUser();
     }
   }
@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
   }
 
   createTimeChart(verified = false) {
-    let time = 0, title = '';
+    let time = 0, title = '', full = 240;
     if (verified == true) {
       time = this.time.verified;
       title = 'ساعت تایید شده';
@@ -135,13 +135,16 @@ export class DashboardComponent implements OnInit {
       time = this.time.notVerified;
       title = 'ساعت گذرانده شده';
     }
+    if (this.time['full']) {
+      full = this.time['full'];
+    }
     var ctx = (<HTMLCanvasElement>document.getElementById('time')).getContext('2d');
     new Chart(ctx, {
       type: 'pie',
       data: {
         labels: [title, 'ساعت باقی مانده'],
         datasets: [{
-          data: [time, 240 - time],
+          data: [time, full - time],
           backgroundColor: [
             "#2196f3",
             "#6ec6ff"
@@ -183,7 +186,7 @@ export class DashboardComponent implements OnInit {
           label: "امتیاز روز",
           data,
           backgroundColor,
-          borderWidth: 0
+          borderWidth: 0,
         }]
       }
     });
