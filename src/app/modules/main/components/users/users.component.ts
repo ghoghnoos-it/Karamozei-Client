@@ -69,7 +69,7 @@ export class UsersComponent implements OnInit {
   }
 
   update() {
-    if (this.permission != 'user' && this.data['id'] == null) {
+    if (this.data['id'] == null) {
       this.data['permission'] = this.permission;
       this.http.request('main', '/user/new', 'POST', this.data, true)
         .then((res: any) => {
