@@ -18,12 +18,5 @@
             </mdc-form-field>
             <button mdc-button secondary raised [disabled]="loading" (click)="submit()">ورود</button>
         </div>
-        <mdc-card-actions *ngIf="sent == true">
-            <span class="back" (click)="sent = false">ویرایش شماره موبایل</span>
-            <span class="timer" *ngIf="time != 0">{{time}}</span>
-            <button mdc-fab mini (click)="send()" *ngIf="time == 0">
-                <mdc-icon>refresh</mdc-icon>
-            </button>
-        </mdc-card-actions>
     </mdc-card>
 </div>
