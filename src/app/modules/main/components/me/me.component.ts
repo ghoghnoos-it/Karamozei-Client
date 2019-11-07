@@ -4,6 +4,7 @@ import { MdcSnackbar } from '@angular-mdc/web';
 import { Account } from '../../../../services/account/account.service';
 import { Http } from '../../../../services/http/http.service';
 import { Loading } from '../../../../services/loading/loading.service';
+import { Toast } from '../../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-me',
@@ -13,7 +14,11 @@ import { Loading } from '../../../../services/loading/loading.service';
 export class MeComponent implements OnInit {
 
   public sessions: any[] = null;
-  constructor(public account: Account, private http: Http, public loading: Loading, private router: Router, private snackbar: MdcSnackbar) { }
+  public password = {
+    'new': '',
+    'try-new': ''
+  }
+  constructor(public account: Account, private http: Http, public loading: Loading, private router: Router, private snackbar: MdcSnackbar, private toast: Toast) { }
 
   ngOnInit() {
     this.fetch();
@@ -45,6 +50,23 @@ export class MeComponent implements OnInit {
             }
           }
         });
+    }
+  }
+
+  changePassword() {
+    let n = this.password['new'],
+      tn = this.password["try-new"];
+
+    if (!n || n.length == 0) this.toast.make('رمز عبور جدید را وارد کنید.', this.snackbar, 4000);
+    else if (!tn || tn.length == 0) this.toast.make('تکرار رمز عبور جدید را وارد کنید.', this.snackbar, 4000);
+    else if (tn != n) this.toast.make('رمزعبور با تکرار آن همخوانی ندارند.', this.snackbar, 4000);
+    else {
+      this.http.request('main', '/user/update', 'PUT', { password: n }, true)
+        .then((res: any) => {
+          this.snackbar.open(res['message']['fa'], '', {
+            direction: 'rtl'
+          });
+        })
     }
   }
 

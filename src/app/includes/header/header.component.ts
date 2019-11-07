@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   public closeable: Boolean = false;
   public path: String = window.location.pathname;
   public name: String = 'ناشناس';
-  public phone: String = '0900000000';
+  public code: String = '0900000000';
   public installable: Boolean = false;
   public list: object[] = [
     {
@@ -61,9 +61,10 @@ export class HeaderComponent implements OnInit {
     window.onresize = () => this.setOpen();
     this.setOpen();
     this.pwaEvent();
+    
     setInterval(() => {
-      if (this.account.info && this.account.info['phone'] && this.account.info['phone']['number']) {
-        this.phone = this.account.info['phone']['number'];
+      if (this.account.info && this.account.info['info'] && this.account.info['info']['personal_code']) {
+        this.code = this.account.info['info']['personal_code'];
       }
       if (this.account.info && this.account.info['name'] && this.account.info['name']['first'] && this.account.info['name']['last']) {
         this.name = this.account.info['name']['first'] + ' ' + this.account.info['name']['last'];

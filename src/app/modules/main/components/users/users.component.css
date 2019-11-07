@@ -35,6 +35,7 @@ mdc-data-table {
 
 mdc-card {
     margin: 10px auto;
+    margin-top: 80px;
     width: 80%;
 }
 
@@ -59,7 +60,8 @@ div.buttons {
 }
 
 @media only screen and (max-width: 600px) {
-    div.table {
+    div.table,
+    mdc-card {
         position: relative;
         width: calc(100% - 20px);
     }

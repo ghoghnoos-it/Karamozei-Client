@@ -62,7 +62,7 @@ export class UsersComponent implements OnInit {
         .then((res: any) => {
           this.toast.make(res['message']['fa'], this.snackbar);
           if (res['status'] == true) {
-            this.items.splice(index);
+            this.items.splice(index, 1);
           }
         })
     });
@@ -93,6 +93,37 @@ export class UsersComponent implements OnInit {
   }
 
   setEditable(data) {
+    if (data == null) {
+      data = {
+        name: {
+          first: null,
+          last: null
+        },
+        phone: {
+          number: null,
+        },
+        info: {
+          personal_code: null,
+          gender: null,
+          birth: {
+            year: null,
+          },
+          married: null,
+        },
+        parrent: {
+          name: null,
+          relationship: null,
+          phone: null
+        },
+        field: null,
+        entry: {
+          year: null,
+          season: null
+        },
+        time: 240,
+        teacher: null,
+      }
+    }
     this.data = data;
     this.mode = 'edit';
   }

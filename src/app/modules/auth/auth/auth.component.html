@@ -1,20 +1,22 @@
 <div class="container flex column c-ai c-jc">
     <mdc-card>
         <div class="content flex column">
-            <h3>حساب کاربری</h3>
-            <p *ngIf="sent == false">با شماره موبایل خود می توانید ایجاد / ورود به حساب کاربری کنید.</p>
-            <p *ngIf="sent == true">کد تایید ۵ رقمی به شماره موبایل {{phone}} ارسال شد.</p>
-            <mdc-form-field fluid *ngIf="sent == false">
-                <mdc-text-field type="tel" [(ngModel)]="phone" (keyup.enter)="submit()" label="شماره موبایل" outlined
-                    required autocomplete="off">
+            <h3>ورود به حساب کاربری</h3>
+            <p>با نام کاربری و رمزعبور می توانید وارد حساب کاربری خود شوید.</p>
+            <mdc-form-field fluid>
+                <mdc-text-field type="tel" [(ngModel)]="username" (keyup.enter)="submit()"
+                    label="نام کاربری" outlined required autocomplete="off">
                 </mdc-text-field>
+                <mdc-helper-text persistent>نام کاربری شما کد ملی شما می باشد.</mdc-helper-text>
             </mdc-form-field>
-            <mdc-form-field fluid *ngIf="sent == true">
-                <mdc-text-field type="tel" [(ngModel)]="token" (keyup)="onKeyup('token',5)" (keyup.enter)="submit()"
-                    label="کد تایید" outlined required autocomplete="off">
+            <br>
+            <mdc-form-field fluid>
+                <mdc-text-field type="password" [(ngModel)]="password" (keyup.enter)="submit()"
+                    label="رمزعبور" outlined required autocomplete="off">
                 </mdc-text-field>
+                <mdc-helper-text persistent>رمزعبور شما امکان دارد کد ملی شما باشد.</mdc-helper-text>
             </mdc-form-field>
-            <button mdc-button secondary raised [disabled]="loading" (click)="submit()">{{sent?"ثبت":"ارسال"}}</button>
+            <button mdc-button secondary raised [disabled]="loading" (click)="submit()">ورود</button>
         </div>
         <mdc-card-actions *ngIf="sent == true">
             <span class="back" (click)="sent = false">ویرایش شماره موبایل</span>

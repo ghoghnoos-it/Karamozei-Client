@@ -1,11 +1,11 @@
 <div class="background"></div>
 <div class="container flex column">
     <div class="head flex nowrap c-ai">
-        <button mdc-button secondary raised *ngIf="permission != 'user' && mode == 'table'"
-            (click)="setEditable({name: { first: null, last: null }, info: { personal_code: null, gender: null }, phone: { number: null }})">
+        <button mdc-button secondary raised *ngIf="mode == 'table'" (click)="setEditable(null)">
             <mdc-icon>add</mdc-icon>افزودن
         </button>
-        <mdc-select placeholder="نوع کاربر" (valueChange)="setData($event)" [(ngModel)]="permission">
+        <mdc-select placeholder="نوع کاربر" *ngIf="mode == 'table'" (valueChange)="setData($event)"
+            [(ngModel)]="permission">
             <mdc-menu>
                 <mdc-list>
                     <mdc-list-item value="user">کارآموز</mdc-list-item>
@@ -54,6 +54,7 @@
                     <mdc-tab label="اطلاعات شخصی"></mdc-tab>
                     <mdc-tab label="اطلاعات والدین"></mdc-tab>
                     <mdc-tab label="اطلاعات کاربر"></mdc-tab>
+                    <mdc-tab label="رمزعبور"></mdc-tab>
                 </mdc-tab-scroller>
             </mdc-tab-bar>
         </div>
@@ -69,8 +70,8 @@
                 [(ngModel)]="data['info']['personal_code']">
             </mdc-text-field>
             <br>
-            <mdc-text-field *ngIf="permission == 'user'" outlined label="سال تولد ( مثال:1398)" type="tel" name="birth_year"
-                autocomplete="off" maxlength="4" [(ngModel)]="data['info']['birth']['year']">
+            <mdc-text-field *ngIf="permission == 'user'" outlined label="سال تولد ( مثال:1398)" type="tel"
+                name="birth_year" autocomplete="off" maxlength="4" [(ngModel)]="data['info']['birth']['year']">
             </mdc-text-field>
             <br>
             <mdc-text-field outlined label="شماره تماس" type="tel" name="phone_number" autocomplete="off"
@@ -144,7 +145,8 @@
         <div class="content" *ngIf="permission == 'user' && index === 2">
             <h3 mdcHeadline6> اطلاعات کاربری</h3>
             <div class="flex column">
-                <mdc-text-field autocomplete="off" outlined label="سال ورود ( مثال :1398 )" [(ngModel)]="data['entry']['year']">
+                <mdc-text-field autocomplete="off" outlined label="سال ورود ( مثال :1398 )"
+                    [(ngModel)]="data['entry']['year']">
                 </mdc-text-field>
                 <mdc-select placeholder="فصل" outlined [(ngModel)]="data['entry']['season']">
                     <mdc-menu>
@@ -164,8 +166,15 @@
                         </mdc-list>
                     </mdc-menu>
                 </mdc-select>
-                <mdc-text-field outlined type="number" [min]="0"  label="ساعات کارآموزی" [(ngModel)]="data['time']"></mdc-text-field>
+                <mdc-text-field outlined type="number" [min]="0" label="ساعات کارآموزی" [(ngModel)]="data['time']">
+                </mdc-text-field>
             </div>
+        </div>
+        <div class="content" *ngIf="(permission == 'user' && index === 3) || permission != 'user'">
+                <h3 mdcHeadline6>رمزعبور</h3>
+                <p>شما می توانید رمزعبور کاربر را تغییر دهید.</p>
+            <mdc-text-field outlined type="password" label="رمزعبور جدید" [(ngModel)]="data['password']">
+            </mdc-text-field>
         </div>
         <div class="buttons">
             <button mdc-button raised secondary (click)="update()">{{data['id']?"ویرایش":"ثبت"}}</button>

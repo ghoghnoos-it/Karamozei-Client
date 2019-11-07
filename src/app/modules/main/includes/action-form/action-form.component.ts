@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MDC_DIALOG_DATA, MdcDialogRef, MdcSnackbar } from '@angular-mdc/web';
 import { Http } from '../../../../services/http/http.service';
 import { Loading } from '../../../../services/loading/loading.service';
-import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-action-form',
@@ -37,12 +36,23 @@ export class ActionFormComponent implements OnInit {
     start: "00:00",
     end: "00:00"
   }
+  public date = {
+    year: null,
+    month: null,
+    day: null
+  }
   public title: string = "";
   public disable: boolean = true;
   constructor(private dialogRef: MdcDialogRef<ActionFormComponent>, @Inject(MDC_DIALOG_DATA) public data: any, private http: Http, public loading: Loading, private snackbar: MdcSnackbar) { }
   ngOnInit() {
     if(this.data['title']){
       this.title = this.data['title'];      
+    }
+    if(this.data['date']){
+      let date = this.data['date'];
+      this.date['year'] = date['year'];
+      this.date['month'] = date['month'];
+      this.date['day'] = date['day'];
     }
     if (this.data['action'] && this.data['action']['id']) {
       this.action = this.data['action'];
@@ -82,12 +92,11 @@ export class ActionFormComponent implements OnInit {
     }
   }
   submit() {
-    this.action['time']['max'] = this.getMax();
-    let today = moment().locale("fa").format("YYYY/M/D").split('/');
+    this.action['time']['max'] = this.getMax();    
     this.action['date'] = {};
-    this.action['date']['year'] = this.data['date']['year'].toString() || today[0];
-    this.action['date']['month'] = this.data['date']['month'].toString() || today[1];
-    this.action['date']['day'] = this.data['date']['day'].toString() || today[2];
+    this.action['date']['year'] = this.date['year'].toString();
+    this.action['date']['month'] = this.date['month'].toString();
+    this.action['date']['day'] = this.date['day'].toString();
     let method = (this.action['id']) ? 'PUT' : 'POST';
     let header = {};
     if (method == "PUT") {
@@ -128,7 +137,9 @@ export class ActionFormComponent implements OnInit {
 
     if ((isNaN(hour) != true && isNaN(minute) != true)) {
       if (hour >= 0 && minute >= 0) {
-        if (hour != 0 && minute != 0) {
+        if(hour == 0 && minute == 0) {
+          this.disable = true;
+        } else if (hour != 0 || minute != 0) {
           this.disable = false;
         } else {
           this.disable = true;

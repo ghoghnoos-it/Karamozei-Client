@@ -4,6 +4,7 @@
         <mdc-tab-scroller>
             <mdc-tab label="اطلاعات شخصی" id="personal"></mdc-tab>
             <mdc-tab label="اطلاعات والدین" id="parrent" *ngIf="account['info']['permission'] == 'user'"></mdc-tab>
+            <mdc-tab label="تغییر رمزعبور" id="password"></mdc-tab>
             <mdc-tab label="نشست های فعال" id="sessions"></mdc-tab>
         </mdc-tab-scroller>
     </mdc-tab-bar>
@@ -13,13 +14,14 @@
             [(ngModel)]="account.info['name']['first']"></mdc-text-field>
         <mdc-text-field outlined label="نام خانوادگی" name="lastname" autocomplete="off"
             [(ngModel)]="account.info['name']['last']"></mdc-text-field>
-        <mdc-text-field outlined label="کد ملی" type="tel" name="personal_code" autocomplete="off"
+        <mdc-text-field outlined label="کد ملی" type="tel" name="personal_code" disabled autocomplete="off"
             [(ngModel)]="account.info['info']['personal_code']">
         </mdc-text-field>
-        <mdc-text-field outlined label="سال تولد ( مثال:1398 )" type="tel" name="birth_year" autocomplete="off" maxlength="4"
-            [(ngModel)]="account.info['info']['birth']['year']" *ngIf="account['info']['permission'] == 'user'">
+        <mdc-text-field outlined label="سال تولد ( مثال:1398 )" type="tel" name="birth_year" autocomplete="off"
+            maxlength="4" [(ngModel)]="account.info['info']['birth']['year']"
+            *ngIf="account['info']['permission'] == 'user'">
         </mdc-text-field>
-        <mdc-text-field outlined label="شماره تماس" type="tel" name="phone_number" disabled
+        <mdc-text-field outlined label="شماره تماس" type="tel" name="phone_number" autocomplete="off"
             [(ngModel)]="account.info['phone']['number']">
         </mdc-text-field>
         <mdc-select *ngIf="account['info']['permission'] == 'user'" placeholder="رشته تحصیلی" outlined
@@ -70,7 +72,8 @@
 
     <mdc-card *ngIf="tab.activeTabIndex == 1 && account['info']['permission'] == 'user'">
         <h3 mdcHeadline6>ارتباط والدین</h3>
-        <p class="error">توجه داشته باشین که ما فقط در صورت بروز هرگونه اتفاق با والدین شما تماس گرفته و آن ها را مطلع خواهیم کرد.</p>
+        <p class="error">توجه داشته باشین که ما فقط در صورت بروز هرگونه اتفاق با والدین شما تماس گرفته و آن ها را مطلع
+            خواهیم کرد.</p>
         <mdc-form-field class="flex column">
             <mdc-text-field outlined label="نام و نام خانوادگی" [(ngModel)]="account.info['parrent']['name']">
             </mdc-text-field>
@@ -87,7 +90,18 @@
             <mdc-text-field outlined label="شماره تماس" [(ngModel)]="account.info['parrent']['phone']"></mdc-text-field>
         </mdc-form-field>
     </mdc-card>
-    <div *ngIf="(tab.activeTabIndex == 2 && account['info']['permission'] == 'user') || (account['info']['permission'] != 'user' && tab.activeTabIndex == 1)"
+    <div *ngIf="(tab.activeTabIndex == 2 && account['info']['permission'] == 'user') || (account['info']['permission'] != 'user' && tab.activeTabIndex == 1)">
+        <mdc-card>
+            <h3>تغییر رمز عبور</h3>
+            <p>توجه داشته باشید که هیچ راهی برای بازگرداندن رمز قبلی نخواهید داشت.</p>
+            <mdc-text-field outlined type="password" label="رمزعبور جدید" [(ngModel)]="password['new']">
+            </mdc-text-field>
+            <mdc-text-field outlined type="password" label="تکرار رمزعبور جدید" [(ngModel)]="password['try-new']">
+            </mdc-text-field>
+            <button style="margin-bottom: -30px;" mdc-button raised>تغییر</button>
+        </mdc-card>
+    </div>
+    <div *ngIf="(tab.activeTabIndex == 3 && account['info']['permission'] == 'user') || (account['info']['permission'] != 'user' && tab.activeTabIndex == 2)"
         class="flex wrap c-jc">
         <mdc-card>
             <h3>نشست های فعال شما</h3>
@@ -119,6 +133,6 @@
         </mdc-card>
     </div>
     <button
-        *ngIf="(tab.activeTabIndex != 2 && account['info']['permission'] == 'user') || (tab.activeTabIndex != 1 && account['info']['permission'] != 'user')"
+        *ngIf="(tab.activeTabIndex != 3 && account['info']['permission'] == 'user') || (tab.activeTabIndex == 0 && account['info']['permission'] != 'user')"
         mdc-fab extended icon="save" label="ثبت اطلاعات" (click)="submit()" [disabled]="loading.show == true"></button>
 </div>
